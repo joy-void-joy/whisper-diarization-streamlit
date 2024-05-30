@@ -1,0 +1,15 @@
+{
+    "ruff.enable": true,
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true,
+    "ruff.fixAll": true,
+    "ruff.codeAction.fixViolation": {
+        "enable": true
+    },
+    "[python]": {
+        "editor.defaultFormatter": "charliermarsh.ruff",
+    },
+    "python.analysis.diagnosticMode": "workspace",
+    "python.analysis.autoImportCompletions": true,
+    "python.defaultInterpreterPath": ".venv/bin/python",
+}

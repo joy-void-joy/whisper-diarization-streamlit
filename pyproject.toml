@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "whisper-streamlit"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11,<3.12"
+streamlit = "^1.34.0"
+sh = "^2.0.6"
+wget = "^3.2"
+nemo-toolkit = {version = "1.23.0", extras = ["asr"]}
+whisperx = {git = "https://github.com/m-bain/whisperX.git", rev = "78dcfaab51005aa703ee21375f81ed31bc248560"}
+deepmultilingualpunctuation = {git = "https://github.com/oliverguhr/deepmultilingualpunctuation.git"}
+streamlit-audiorecorder = "^0.0.5"
+fastapi = {extras = ["multiform"], version = "^0.111.0"}
+python-multipart = "^0.0.9"
+streamlit-javascript = "^0.1.5"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.4.5"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
