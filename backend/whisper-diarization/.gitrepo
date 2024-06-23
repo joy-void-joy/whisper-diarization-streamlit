@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/ingydotnet/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/MahmoudAshraf97/whisper-diarization
+	branch = main
+	commit = 55cd90547341fcb327180d17fdbcbc6991731757
+	parent = be4621310c0c3f32f27033f496f093a39869f4ee
+	method = merge
+	cmdver = 0.4.6
