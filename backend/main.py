@@ -6,7 +6,7 @@ import pathlib
 import sh
 import asyncio
 
-app = FastAPI()
+app = FastAPI(root_path="/api/")
 
 diarize_path = pathlib.Path("./diarize_parallel.py")
 diarize_command = sh.python.bake(diarize_path)  # type: ignore
