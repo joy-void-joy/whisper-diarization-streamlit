@@ -18,6 +18,7 @@ fastapi = {extras = ["multiform"], version = "^0.111.0"}
 python-multipart = "^0.0.9"
 torchaudio = "^2.3.1"
 numpy = "<2"
+ctc-forced-aligner = {git = "https://github.com/MahmoudAshraf97/ctc-forced-aligner"}
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.4.5"

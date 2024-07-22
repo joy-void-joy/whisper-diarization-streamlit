@@ -8,10 +8,10 @@ import asyncio
 
 app = FastAPI(root_path="/api/")
 
-diarize_path = pathlib.Path("./diarize_parallel.py")
-diarize_command = sh.python.bake(diarize_path)  # type: ignore
+diarize_path = pathlib.Path("./whisper-diarization/diarize_parallel.py")
+diarize_command = sh.python.bake(diarize_path.name)  # type: ignore
 
-output_path = pathlib.Path("./output")
+output_path = pathlib.Path("./whisper-diarization/output")
 output_path.mkdir(exist_ok=True, parents=True)
 
 job_lock = asyncio.Lock()
@@ -29,12 +29,13 @@ async def transcribe(filename: pathlib.Path):
         async with job_lock:
             p = diarize_command(
                 "-a",
-                str(filename),
+                str(filename.relative_to(diarize_path.parent)),
                 "--whisper-model",
                 "large-v3",
                 _out=filename.with_suffix(".log"),
                 _err=filename.with_suffix(".log"),
                 _bg=True,
+                _cwd=diarize_path.parent,
             )
             while p.is_alive():
                 await asyncio.sleep(1)
