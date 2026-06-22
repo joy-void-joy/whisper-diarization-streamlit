@@ -1,29 +1,46 @@
-[tool.poetry]
+[project]
 name = "whisper-streamlit"
 version = "0.1.0"
-description = ""
-authors = ["Your Name <you@example.com>"]
+description = "Speaker-diarizing transcription server (OpenAI-compatible) wrapping whisper-diarization"
 readme = "README.md"
+requires-python = ">=3.11,<3.12"
+dependencies = [
+    "ctc-forced-aligner",
+    "deepmultilingualpunctuation",
+    "demucs",
+    "fastapi>=0.111.0",
+    "nemo-toolkit[asr]==1.23.0",
+    "python-multipart>=0.0.9",
+    "sh>=2.0.6",
+    "streamlit>=1.34.0",
+    "streamlit-audiorecorder>=0.0.5",
+    "uvicorn[standard]>=0.34.0",
+    "wget>=3.2",
+    "whisperx",
+]
 
-[tool.poetry.dependencies]
-python = "^3.11,<3.12"
-streamlit = "^1.34.0"
-sh = "^2.0.6"
-wget = "^3.2"
-nemo-toolkit = {version = "1.23.0", extras = ["asr"]}
-whisperx = {git = "https://github.com/m-bain/whisperX.git"}
-deepmultilingualpunctuation = {git = "https://github.com/oliverguhr/deepmultilingualpunctuation.git"}
-streamlit-audiorecorder = "^0.0.5"
-fastapi = {extras = ["multiform"], version = "^0.111.0"}
-python-multipart = "^0.0.9"
-torchaudio = "^2.3.1"
-numpy = "<2"
-ctc-forced-aligner = {git = "https://github.com/MahmoudAshraf97/ctc-forced-aligner"}
-huggingface-hub = "0.22.0"
+[dependency-groups]
+dev = ["ruff>=0.4.5"]
 
-[tool.poetry.group.dev.dependencies]
-ruff = "^0.4.5"
+[tool.uv]
+package = false
+# faster-whisper pulls av 11, which is sdist-only and won't compile against this
+# system's FFmpeg 8; force a newer av that ships wheels bundling its own FFmpeg.
+override-dependencies = ["av>=12,<13"]
 
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+# These packages' setup.py imports a build tool they fail to declare — pkg_resources
+# (shipped by setuptools) for whisperX, Cython for youtokentome — so inject it into
+# their isolated build envs. setuptools is pinned <81 as newer releases drop pkg_resources.
+[tool.uv.extra-build-dependencies]
+whisperx = ["setuptools<81"]
+youtokentome = ["Cython"]
+
+# Pins mirror backend/whisper-diarization/requirements.txt, the version set the
+# diarization pipeline is built against. whisperX is held at the commit that
+# requirements.txt pins — its HEAD has moved to torch 2.8 / numpy 2.1, which the
+# nemo 1.23 stack cannot satisfy. torch resolves from PyPI's main wheels.
+[tool.uv.sources]
+ctc-forced-aligner = { git = "https://github.com/MahmoudAshraf97/ctc-forced-aligner" }
+deepmultilingualpunctuation = { git = "https://github.com/oliverguhr/deepmultilingualpunctuation.git" }
+demucs = { git = "https://github.com/adefossez/demucs.git" }
+whisperx = { git = "https://github.com/m-bain/whisperX.git", rev = "78dcfaab51005aa703ee21375f81ed31bc248560" }
