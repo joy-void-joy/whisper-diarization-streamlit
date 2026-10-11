@@ -1,5 +1,11 @@
 # whisper-diarization-streamlit
 
+> [!IMPORTANT]
+> **This project has moved to [joy-void-joy/whisper-diarize](https://github.com/joy-void-joy/whisper-diarize).**
+> It's a rewrite with a new web UI (file queue, live recording), a voice bank that puts names on
+> speakers, a more accurate diarization pipeline and a CLI. This repository is archived and
+> kept for reference only.
+
 Streamlit port of [whisper-diarization](https://github.com/MahmoudAshraf97/whisper-diarization)
 
 ![preview](https://github.com/joy-void-joy/whisper-diarization-streamlit/assets/56257405/5847eabc-42f6-48ea-af8c-803efd7e3f1d)
